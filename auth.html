@@ -1,0 +1,197 @@
+{% load static %}
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="min-h-screen bg-[#050614] flex items-center justify-center px-5 py-10">
+
+  <!-- Outer Glow Card -->
+  <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- LEFT BRAND PANEL -->
+    <div class="rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 p-10 shadow-xl relative overflow-hidden">
+      <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.35),transparent_60%)]"></div>
+
+      <div class="relative z-10">
+        <div class="flex items-center gap-4">
+          <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-violet-500/20">
+            PH
+          </div>
+          <div>
+            <h1 class="text-white text-2xl font-extrabold leading-tight">ProLance Hub</h1>
+            <p class="text-white/60 text-sm">Professional Freelancer Marketplace</p>
+          </div>
+        </div>
+
+        <div class="mt-10 space-y-5">
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+            <div class="text-white font-bold">🚀 Hire Faster</div>
+            <div class="text-white/60 text-sm mt-1">Post jobs, track applicants, pay securely.</div>
+          </div>
+
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+            <div class="text-white font-bold">💼 Work Smarter</div>
+            <div class="text-white/60 text-sm mt-1">Freelancers can track earnings & contracts.</div>
+          </div>
+
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+            <div class="text-white font-bold">🔒 Secure Payments</div>
+            <div class="text-white/60 text-sm mt-1">Balances update using model-level logic.</div>
+          </div>
+        </div>
+
+        <div class="mt-10 text-white/40 text-xs">
+          Tip: Use the same account to test Recruiter & Freelancer flows (different roles).
+        </div>
+      </div>
+    </div>
+
+
+    <!-- RIGHT AUTH PANEL -->
+    <div class="rounded-3xl bg-white/5 border border-white/10 p-8 shadow-xl">
+
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-white text-3xl font-extrabold">Welcome Back ✨</h2>
+          <p class="text-white/60 text-sm mt-1">Login or create an account</p>
+        </div>
+
+        <div class="hidden sm:flex items-center gap-2 rounded-full bg-white/5 border border-white/10 p-1">
+          <button id="btnLogin"
+                  onclick="showTab('login')"
+                  class="px-4 py-2 rounded-full text-sm bg-white/10 text-white font-semibold">
+            Login
+          </button>
+          <button id="btnSignup"
+                  onclick="showTab('signup')"
+                  class="px-4 py-2 rounded-full text-sm text-white/60 hover:text-white">
+            Signup
+          </button>
+        </div>
+      </div>
+
+      <!-- Django messages -->
+      {% if messages %}
+      <div class="mt-6 space-y-3">
+        {% for message in messages %}
+        <div class="rounded-2xl bg-red-500/10 border border-red-500/30 px-4 py-3 text-red-200 text-sm">
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" method="POST" class="mt-8 space-y-5">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="login"/>
+
+        <div>
+          <label class="text-white/70 text-sm">Username</label>
+          <input name="username" required
+                 class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white outline-none focus:border-violet-400"
+                 placeholder="Enter username">
+        </div>
+
+        <div>
+          <label class="text-white/70 text-sm">Password</label>
+          <input type="password" name="password" required
+                 class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white outline-none focus:border-violet-400"
+                 placeholder="Enter password">
+        </div>
+
+        <button type="submit"
+                class="w-full rounded-2xl bg-violet-500/80 hover:bg-violet-500 px-6 py-4 text-white font-bold shadow-lg shadow-violet-500/20">
+          🔑 Login
+        </button>
+      </form>
+
+
+      <!-- SIGNUP FORM -->
+      <form id="signupForm" method="POST" class="mt-8 space-y-5 hidden">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="signup"/>
+
+        <div>
+          <label class="text-white/70 text-sm">Select Role</label>
+          <select name="role" required
+                  class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white outline-none focus:border-violet-400">
+            <option value="" class="bg-[#050614]">-- Select Role --</option>
+            <option value="recruiter" class="bg-[#050614]">Recruiter</option>
+            <option value="freelancer" class="bg-[#050614]">Freelancer</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-white/70 text-sm">Username</label>
+          <input name="username" required
+                 class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white outline-none focus:border-violet-400"
+                 placeholder="Create username">
+        </div>
+
+        <div>
+          <label class="text-white/70 text-sm">Email</label>
+          <input type="email" name="email" required
+                 class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white outline-none focus:border-violet-400"
+                 placeholder="Enter email">
+        </div>
+
+        <div>
+          <label class="text-white/70 text-sm">Password</label>
+          <input type="password" name="password" required
+                 class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white outline-none focus:border-violet-400"
+                 placeholder="Create password">
+        </div>
+
+        <button type="submit"
+                class="w-full rounded-2xl bg-violet-500/80 hover:bg-violet-500 px-6 py-4 text-white font-bold shadow-lg shadow-violet-500/20">
+          ✨ Create Account
+        </button>
+      </form>
+
+      <!-- Mobile tabs -->
+      <div class="sm:hidden mt-6 grid grid-cols-2 gap-3">
+        <button onclick="showTab('login')"
+                class="rounded-2xl bg-white/10 border border-white/10 py-3 text-white font-semibold">
+          Login
+        </button>
+        <button onclick="showTab('signup')"
+                class="rounded-2xl bg-white/5 border border-white/10 py-3 text-white/80">
+          Signup
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showTab(tab) {
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+    const btnLogin = document.getElementById("btnLogin");
+    const btnSignup = document.getElementById("btnSignup");
+
+    if (tab === "signup") {
+      loginForm.classList.add("hidden");
+      signupForm.classList.remove("hidden");
+
+      if (btnLogin && btnSignup) {
+        btnLogin.classList.remove("bg-white/10", "text-white", "font-semibold");
+        btnLogin.classList.add("text-white/60");
+
+        btnSignup.classList.add("bg-white/10", "text-white", "font-semibold");
+        btnSignup.classList.remove("text-white/60");
+      }
+    } else {
+      signupForm.classList.add("hidden");
+      loginForm.classList.remove("hidden");
+
+      if (btnLogin && btnSignup) {
+        btnSignup.classList.remove("bg-white/10", "text-white", "font-semibold");
+        btnSignup.classList.add("text-white/60");
+
+        btnLogin.classList.add("bg-white/10", "text-white", "font-semibold");
+        btnLogin.classList.remove("text-white/60");
+      }
+    }
+  }
+</script>

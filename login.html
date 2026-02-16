@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Login | ProLance Hub{% endblock %}
+
+{% block content %}
+<div class="grid" style="grid-template-columns: 1fr 1fr; align-items:stretch;">
+  <div class="panel" style="padding:26px;">
+    <div class="row">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--p1),var(--p2));display:grid;place-items:center;font-weight:900;">P</div>
+        <div>
+          <div style="font-weight:900;font-size:18px;">ProLance Hub</div>
+          <div class="muted" style="font-size:13px;">Build • Showcase • Get Hired</div>
+        </div>
+      </div>
+      <span class="badge">Secure</span>
+    </div>
+
+    <h1 style="margin:20px 0 10px;font-size:42px;">Welcome back 👋</h1>
+    <p class="muted" style="margin:0;line-height:1.6;">Login with the email you used during signup.</p>
+
+    <div style="display:flex; gap:10px; margin-top:18px; flex-wrap:wrap;">
+      <span class="badge">Freelancer</span>
+      <span class="badge">Recruiter</span>
+      <span class="badge">Role Redirect</span>
+    </div>
+
+    <div class="muted" style="margin-top:32px;">© 2026 ProLance Hub</div>
+  </div>
+
+  <div class="panel" style="padding:26px;">
+    <div class="row" style="margin-bottom:6px;">
+      <div>
+        <div style="font-weight:900;font-size:34px;">Login</div>
+        <div class="muted">Enter your email and password.</div>
+      </div>
+      <span class="badge">Secure</span>
+    </div>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="msg {% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}info{% endif %}">
+          <span class="dot"></span>
+          <div>{{ message }}</div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div style="margin-top:14px;">
+        <label class="muted">Email</label>
+        <input name="email" required type="email"
+               style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(17,24,39,.35);color:var(--text);outline:none;">
+      </div>
+
+      <div style="margin-top:14px;">
+        <label class="muted">Password</label>
+        <input name="password" required type="password"
+               style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(17,24,39,.35);color:var(--text);outline:none;">
+      </div>
+
+      <button class="btn primary" type="submit" style="width:100%;margin-top:18px;">Login</button>
+    </form>
+
+    <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;">
+      <a class="btn" href="/freelancer/signup/">Freelancer Signup</a>
+      <a class="btn" href="/recruiter/signup/">Recruiter Signup</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  @media (max-width: 900px){
+    .grid{grid-template-columns:1fr !important;}
+  }
+</style>
+{% endblock %}
